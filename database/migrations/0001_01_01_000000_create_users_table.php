@@ -13,10 +13,28 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+
+            // Identitas pengguna
+            $table->string('nip', 18)->unique();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+
+            // Password login
             $table->string('password');
+
+            // Hak akses pengguna
+            $table->enum('role', [
+                'petugas_piket',
+                'penerima_bidang',
+                'admin',
+                'pimpinan',
+            ]);
+
+            // Bidang pengguna
+            $table->unsignedBigInteger('bidang_id')->nullable();
+
+            // Status akun
+            $table->boolean('aktif')->default(true);
+
             $table->rememberToken();
             $table->timestamps();
         });
