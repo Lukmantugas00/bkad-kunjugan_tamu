@@ -1,8 +1,7 @@
-
 <?php
-
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\BidangController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KunjunganController as AdminKunjunganController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\UserController;
@@ -142,9 +141,8 @@ Route::middleware([
     'role:admin',
 ])->group(function () {
 
-    Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
     // =========================
     // MANAJEMEN PENGGUNA
@@ -179,6 +177,13 @@ Route::middleware([
         '/admin/users/{user}/toggle-aktif',
         [UserController::class, 'toggleAktif']
     )->name('admin.users.toggleAktif');
+
+    Route::delete(
+        '/admin/users/{user}',
+        [UserController::class, 'destroy']
+    )->name('admin.users.destroy');
+
+
 
     // =========================
     // DATA KUNJUNGAN ADMIN
@@ -303,3 +308,4 @@ Route::middleware([
     )->name('pimpinan.laporan.csv');
 
 });
+

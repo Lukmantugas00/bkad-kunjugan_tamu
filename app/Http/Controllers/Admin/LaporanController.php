@@ -156,6 +156,7 @@ class LaporanController extends Controller
         $kunjungans = $query
             ->orderByDesc('created_at')
             ->paginate(20)
+            ->onEachSide(1)
             ->withQueryString();
 
         $bidangs = Bidang::orderBy('nama')->get();

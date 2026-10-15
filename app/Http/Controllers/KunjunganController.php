@@ -6,6 +6,7 @@ use App\Helpers\ActivityLogger;
 use App\Models\Bidang;
 use App\Models\Kunjungan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -112,13 +113,22 @@ class KunjunganController extends Controller
     {
         $validated = $request->validate([
             'nama_pengunjung' => ['required', 'string', 'max:255'],
-            'nip' => ['required', 'string', 'size:18'],
-            'jabatan' => ['required', 'string', 'max:255'],
-            'instansi' => ['required', 'string', 'max:255'],
+            'nip' => ['nullable', 'string', 'digits:18'],
+            'jabatan' => ['nullable', 'string', 'max:255'],
+            'instansi' => ['nullable', 'string', 'max:255'],
             'bidang_tujuan_id' => ['required', 'exists:bidangs,id'],
             'keperluan' => ['required', 'string'],
             'tanda_tangan' => ['nullable', 'string'],
         ]);
+
+        /*
+         * Database kolom nip, jabatan, dan instansi NOT NULL.
+         * Konversi null (dari validasi nullable) ke string kosong
+         * agar tidak terjadi error constraint database.
+         */
+        $validated['nip'] = $validated['nip'] ?? '';
+        $validated['jabatan'] = $validated['jabatan'] ?? '';
+        $validated['instansi'] = $validated['instansi'] ?? '';
 
         $kunjungan = Kunjungan::create($validated);
 
@@ -178,7 +188,7 @@ class KunjunganController extends Controller
     /**
      * Kotak masuk bidang.
      */
-    public function inbox(string $kode)
+    public function inbox(string $kode, Request $request)
     {
         $bidang = Bidang::where('kode', strtoupper($kode))
             ->where('aktif', true)
@@ -197,11 +207,34 @@ class KunjunganController extends Controller
             );
         }
 
-        $kunjungans = Kunjungan::with('bidangTujuan')
-            ->where('bidang_tujuan_id', $bidang->id)
-            ->orderByRaw(
-                "FIELD(status, 'baru', 'diterima', 'selesai')"
-            )
+        $query = Kunjungan::with('bidangTujuan')
+            ->where('bidang_tujuan_id', $bidang->id);
+
+        // Search
+        if ($request->filled('q')) {
+            $search = $request->q;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_pengunjung', 'like', "%{$search}%")
+                    ->orWhere('nip', 'like', "%{$search}%")
+                    ->orWhere('instansi', 'like', "%{$search}%")
+                    ->orWhere('keperluan', 'like', "%{$search}%");
+            });
+        }
+
+        // Date filter
+        if ($request->filled('tanggal')) {
+            $date = Carbon::parse($request->tanggal, 'Asia/Makassar')
+                ->setTimezone(config('app.timezone'));
+            $query->whereDate('created_at', $date);
+        }
+
+        // Status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $kunjungans = $query
+            ->orderByRaw("FIELD(status, 'baru', 'diterima', 'selesai')")
             ->orderByDesc('created_at')
             ->get();
 

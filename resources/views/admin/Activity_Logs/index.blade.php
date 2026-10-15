@@ -696,9 +696,7 @@
     {{-- SIDEBAR --}}
     <aside class="sidebar" id="sidebar">
         <div class="brand-header">
-            <div class="brand-logo">
-                <i class="fa-solid fa-building-columns"></i>
-            </div>
+            <div class="brand-logo"><img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);"></div>
             <div>
                 <div class="brand-title">SIKUTA</div>
                 <div class="brand-sub">BKAD KABUPATEN TAPIN</div>
@@ -782,17 +780,6 @@
         {{-- CONTENT --}}
         <main class="content">
 
-            {{-- Page Banner --}}
-            <div class="page-banner">
-                <div class="page-banner-info">
-                    <h2>Log Aktivitas</h2>
-                    <p>Riwayat aktivitas pengguna dalam sistem SIKUTA untuk kebutuhan audit keamanan, transparansi, dan pemantauan interaksi layanan secara real-time.</p>
-                </div>
-                <div class="page-banner-badge">
-                    <i class="fa-solid fa-arrows-rotate fa-spin" style="--fa-animation-duration: 3s; color: var(--color-primary);"></i>
-                    <span>Sinkronisasi Otomatis 5 Detik</span>
-                </div>
-            </div>
 
             {{-- Filter Card --}}
             <div class="card-filter">
@@ -1172,3 +1159,4 @@
     </script>
 </body>
 </html>
+

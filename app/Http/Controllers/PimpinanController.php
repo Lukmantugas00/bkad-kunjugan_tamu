@@ -226,16 +226,40 @@ class PimpinanController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $perluPerhatian = Kunjungan::with('bidangTujuan')
-            ->where('status', 'menunggu')
-            ->where(
-                'created_at',
-                '<=',
-                $sekarang->copy()->subMinutes(10)
-            )
-            ->latest('created_at')
-            ->limit(5)
-            ->get();
+        $sekarangWita = now('Asia/Makassar');
+
+        // Kategori A: Status 'baru' yang belum direspon > 10 menit
+        $baruBelumDirespon = Kunjungan::with('bidangTujuan')
+            ->where('status', 'baru')
+            ->where('created_at', '<=', $sekarangWita->copy()->subMinutes(10))
+            ->get()
+            ->map(function ($k) use ($sekarangWita) {
+                $k->kategori = 'baru';
+                $k->waktu_acu = $k->created_at;
+                $k->lama_menunggu = $k->created_at ? $k->created_at->timezone('Asia/Makassar')->diffInMinutes($sekarangWita) : 0;
+                return $k;
+            });
+
+        // Kategori B: Status 'diterima' yang belum selesai > 24 jam
+        $diterimaBelumSelesai = Kunjungan::with('bidangTujuan')
+            ->where('status', 'diterima')
+            ->where('diterima_at', '<=', $sekarangWita->copy()->subHours(24))
+            ->get()
+            ->map(function ($k) use ($sekarangWita) {
+                $k->kategori = 'diterima';
+                $k->waktu_acu = $k->diterima_at;
+                $k->lama_menunggu = $k->diterima_at ? $k->diterima_at->timezone('Asia/Makassar')->diffInMinutes($sekarangWita) : 0;
+                return $k;
+            });
+
+        // Gabungkan, urutkan dari yang paling lama, ambil maksimal 5
+        $perluPerhatian = $baruBelumDirespon
+            ->concat($diterimaBelumSelesai)
+            ->sortByDesc('lama_menunggu')
+            ->take(5)
+            ->values();
+
+        $totalPerluPerhatian = $baruBelumDirespon->count() + $diterimaBelumSelesai->count();
 
         /*
         |--------------------------------------------------------------------------
@@ -284,6 +308,7 @@ class PimpinanController extends Controller
 
                 'kunjunganTerbaru',
                 'perluPerhatian',
+                'totalPerluPerhatian',
 
                 'bidangTeratas',
                 'persentaseBidangTeratas'

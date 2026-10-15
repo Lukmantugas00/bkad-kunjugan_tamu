@@ -436,7 +436,7 @@
         <div class="header-inner">
             <a href="{{ route('kunjungan.inbox', $bidang->kode) }}" class="brand-link">
                 <div class="brand-logo">
-                    <i class="fa-solid fa-building-columns"></i>
+                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
                 </div>
                 <div>
                     <div class="brand-title">SIKUTA BKAD</div>

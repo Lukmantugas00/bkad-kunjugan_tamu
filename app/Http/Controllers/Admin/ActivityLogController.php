@@ -55,6 +55,7 @@ class ActivityLogController extends Controller
         $logs = $query
             ->orderByDesc('created_at')
             ->paginate(20)
+            ->onEachSide(1)
             ->withQueryString();
 
         $users = User::orderBy('name')->get();

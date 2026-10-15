@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pimpinan - SIKUTA BKAD Kabupaten Tapin</title>
+    <title>Dashboard Kepala Badan - SIKUTA BKAD Kabupaten Tapin</title>
 
     {{-- Fonts & Icons --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -753,7 +753,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="brand-header">
             <div class="brand-logo">
-                <i class="fa-solid fa-building-columns"></i>
+                <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
             </div>
             <div>
                 <div class="brand-title">SIKUTA</div>
@@ -764,12 +764,12 @@
         <nav class="menu-list">
             <a href="{{ route('pimpinan.dashboard') }}" class="menu-link active">
                 <i class="fa-solid fa-gauge-high"></i>
-                <span>Dasbor Pimpinan</span>
+                <span>Dashboard Kepala Badan</span>
             </a>
 
             <a href="{{ route('pimpinan.laporan') }}" class="menu-link">
                 <i class="fa-solid fa-chart-pie"></i>
-                <span>Laporan Eksekutif</span>
+                <span>Laporan Kunjungan Tamu</span>
             </a>
         </nav>
 
@@ -780,7 +780,7 @@
                 </div>
                 <div>
                     <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
-                    <div class="sidebar-user-role">Pimpinan / Kepala Badan</div>
+                    <div class="sidebar-user-role">Kepala Badan</div>
                 </div>
             </div>
 
@@ -804,8 +804,8 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="topbar-title">
-                    <h1>Dasbor Pimpinan</h1>
-                    <p>Ringkasan eksekutif dan pemantauan kinerja pelayanan tamu BKAD Kabupaten Tapin</p>
+                    <h1>Dashboard Kepala Badan</h1>
+                    <p>Ringkasan dan pemantauan kinerja pelayanan tamu BKAD Kabupaten Tapin</p>
                 </div>
             </div>
 
@@ -1014,17 +1014,29 @@
                     <div class="panel-header">
                         <h3>
                             <i class="fa-solid fa-triangle-exclamation" style="color: var(--color-warning);"></i>
-                            <span>Perlu Perhatian Pimpinan</span>
+                            <span>Perlu Perhatian Kepala Badan
                         </h3>
-                        <span class="panel-header-note">&gt; 10 menit belum direspon</span>
+                        <span class="panel-header-note">
+                            {{ $totalPerluPerhatian > 0
+                                ? "{$totalPerluPerhatian} item (menampilkan 5 teratas)"
+                                : "Tidak ada" }}
+                        </span>
                     </div>
 
                     <div>
                         @forelse($perluPerhatian as $kunjungan)
                             @php
-                                $menit = $kunjungan->created_at
-                                    ? max(1, $kunjungan->created_at->diffInMinutes($sekarang))
-                                    : 0;
+                                $lamaMenit = $kunjungan->lama_menunggu ?? 0;
+                                if ($lamaMenit >= 1440) {
+                                    $waktuText = floor($lamaMenit / 1440) . ' hari';
+                                } elseif ($lamaMenit >= 60) {
+                                    $waktuText = floor($lamaMenit / 60) . ' jam';
+                                } else {
+                                    $waktuText = max(1, $lamaMenit) . ' menit';
+                                }
+                                $badgeClass = $kunjungan->kategori === 'baru' ? 'badge-baru' : 'badge-diterima';
+                                $badgeIcon = $kunjungan->kategori === 'baru' ? 'fa-regular fa-clock' : 'fa-solid fa-hourglass-half';
+                                $badgeLabel = $kunjungan->kategori === 'baru' ? 'Baru' : 'Diterima';
                             @endphp
                             <div class="attention-item">
                                 <div class="attention-item-left">
@@ -1033,19 +1045,27 @@
                                         Tujuan: <strong>{{ $kunjungan->bidangTujuan?->nama ?? '-' }}</strong> &bull; {{ $kunjungan->keperluan }}
                                     </span>
                                 </div>
-                                <div class="attention-badge">
-                                    <i class="fa-regular fa-clock"></i>
-                                    <span>{{ $menit }} menit</span>
+                                <div class="attention-badge {{ $badgeClass }}">
+                                    <i class="{{ $badgeIcon }}"></i>
+                                    <span>{{ $badgeLabel }} &bull; {{ $waktuText }}</span>
                                 </div>
                             </div>
                         @empty
                             <div class="empty-state">
                                 <i class="fa-solid fa-circle-check" style="color: var(--color-success); font-size: 32px;"></i>
                                 <p style="color: var(--color-success); font-weight: 700; margin-top: 8px;">Pelayanan Berjalan Lancar</p>
-                                <span>Tidak ada antrean kunjungan yang tertahan lebih dari 10 menit saat ini.</span>
+                                <span>Tidak ada antrean kunjungan yang tertahan (Baru >10 menit atau Diterima >24 jam).</span>
                             </div>
                         @endforelse
                     </div>
+
+                    @if($totalPerluPerhatian > 5)
+                    <div style="margin-top: 12px; text-align: right;">
+                        <a href="{{ route('pimpinan.laporan') }}" style="font-size: 12px; font-weight: 700; color: var(--color-primary);">
+                            Lihat Semua ({{ $totalPerluPerhatian }}) &rarr;
+                        </a>
+                    </div>
+                    @endif
                 </div>
 
                 {{-- Kunjungan Terbaru --}}
@@ -1076,7 +1096,7 @@
                                 <div>
                                     @if ($kunjungan->status === 'baru' || $kunjungan->status === 'menunggu')
                                         <span class="badge badge-baru">
-                                            <i class="fa-regular fa-clock"></i> Menunggu
+                                            <i class="fa-regular fa-clock"></i> Baru
                                         </span>
                                     @elseif ($kunjungan->status === 'diterima')
                                         <span class="badge badge-diterima">

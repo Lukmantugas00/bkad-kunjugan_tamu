@@ -1166,7 +1166,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="brand-header">
             <div class="brand-logo">
-                <i class="fa-solid fa-building-columns"></i>
+                <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
             </div>
             <div>
                 <div class="brand-title">SIKUTA</div>
@@ -1316,7 +1316,7 @@
             <div class="content-header">
                 <div class="content-header-title">
                     <h2>Daftar Kunjungan Masuk</h2>
-                    <p>{{ now()->locale('id')->translatedFormat('l, d F Y') }} &bull; Layanan tamu Bidang {{ $namaBidang }}</p>
+                     <p>{{ now()->locale('id')->dayName }}, {{ now()->locale('id')->day }} {{ now()->locale('id')->monthName }} {{ now()->locale('id')->year }} &bull; Layanan tamu Bidang {{ $namaBidang }}</p>
                 </div>
 
                 <button type="button" class="btn-refresh" onclick="window.location.reload()">

@@ -702,7 +702,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="brand-header">
             <div class="brand-logo">
-                <i class="fa-solid fa-building-columns"></i>
+                <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
             </div>
             <div>
                 <div class="brand-title">SIKUTA</div>

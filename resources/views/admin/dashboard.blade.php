@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
+        /* CSS from dashboard's @push('styles') but replace .admin-pill with .topbar-badge */
         :root {
             --color-primary-dark: #103F3C;
             --color-primary-active: #17534E;
@@ -259,7 +260,7 @@
             color: var(--color-text-secondary);
         }
 
-        .admin-pill {
+        .topbar-badge {
             background: var(--color-primary-light);
             color: var(--color-primary);
             padding: 6px 14px;
@@ -420,74 +421,179 @@
         @media (prefers-reduced-motion: reduce) {
             * { transition: none !important; animation: none !important; transform: none !important; }
         }
+
+        /* Stats Grid & Tables */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .stat-icon i {
+            /* color will be set via utility classes */
+        }
+        .stat-content {
+            /* nothing */
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-primary-dark);
+            line-height: 1.2;
+        }
+        .stat-desc {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-top: 4px;
+        }
+        .trend-indicator {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+        .trend-up {
+            background: var(--color-success-light);
+            color: var(--color-success);
+        }
+        .trend-down {
+            background: var(--color-danger-light);
+            color: var(--color-danger);
+        }
+        .trend-stable {
+            background: var(--color-info-light);
+            color: var(--color-info);
+        }
+        .tables-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .table-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .table-header {
+            background: #fafcfb;
+            border-bottom: 1px solid var(--color-border);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .table-header h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-primary-dark);
+            margin: 0;
+        }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .table-recent {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table-recent th,
+        .table-recent td {
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        .table-recent th {
+            background: #f8faf9;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .table-recent tbody tr {
+            border-bottom: 1px solid #edf2f0;
+        }
+        .table-recent tbody tr:hover {
+            background: #fbfdfc;
+        }
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .user-name {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        .text-muted {
+            color: var(--color-text-secondary);
+            font-size: 0.85rem;
+        }
+        .btn-link {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        .btn-link:hover {
+            text-decoration: underline;
+            color: var(--color-primary-hover);
+        }
+        .text-center {
+            text-align: center;
+        }
+        .py-4 {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tables-row {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
     {{-- SIDEBAR --}}
-    <aside class="sidebar" id="sidebar">
-        <div class="brand-header">
-            <div class="brand-logo">
-                <i class="fa-solid fa-building-columns"></i>
-            </div>
-            <div>
-                <div class="brand-title">SIKUTA</div>
-                <div class="brand-sub">BKAD KABUPATEN TAPIN</div>
-            </div>
-        </div>
-
-        <nav class="menu-list">
-            <a href="{{ route('admin.dashboard') }}" class="menu-link active">
-                <i class="fa-solid fa-gauge-high"></i>
-                <span>Dashboard</span>
-            </a>
-
-            <a href="{{ route('admin.users.index') }}" class="menu-link">
-                <i class="fa-solid fa-users"></i>
-                <span>Kelola Akun</span>
-            </a>
-
-            <a href="{{ route('admin.bidangs.index') }}" class="menu-link">
-                <i class="fa-solid fa-building"></i>
-                <span>Master Bidang</span>
-            </a>
-
-            <a href="{{ route('admin.kunjungan.index') }}" class="menu-link">
-                <i class="fa-solid fa-clipboard-list"></i>
-                <span>Data Kunjungan</span>
-            </a>
-
-            <a href="{{ route('admin.laporan.index') }}" class="menu-link">
-                <i class="fa-solid fa-chart-bar"></i>
-                <span>Laporan &amp; Rekap</span>
-            </a>
-
-            <a href="{{ route('admin.activity_logs.index') }}" class="menu-link">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                <span>Log Aktivitas</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="sidebar-user">
-                <div class="sidebar-user-avatar">
-                    <i class="fa-solid fa-user-shield"></i>
-                </div>
-                <div>
-                    <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
-                    <div class="sidebar-user-role">Administrator</div>
-                </div>
-            </div>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn-sidebar-logout">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    <span>Keluar Sistem</span>
-                </button>
-            </form>
-        </div>
-    </aside>
+    @include('partials.sidebar', ['active' => 'dashboard'])
 
     {{-- MAIN WRAPPER --}}
     <div class="main-wrapper">
@@ -504,7 +610,7 @@
                 </div>
             </div>
 
-            <div class="admin-pill">
+            <div class="topbar-badge">
                 <i class="fa-solid fa-shield-halved"></i>
                 <span>Mode Administrator</span>
             </div>
@@ -513,7 +619,21 @@
         {{-- CONTENT --}}
         <main class="content">
 
-            {{-- Welcome Card --}}
+            @if (session('success'))
+                <div class="alert alert-success">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>{{ session('error') }}</span>
+                </div>
+            @endif
+
+            <!-- Welcome Card -->
             <div class="welcome-card">
                 <div class="welcome-info">
                     <h2>Selamat datang, {{ auth()->user()->name }}!</h2>
@@ -521,69 +641,174 @@
                 </div>
             </div>
 
-            {{-- Navigation Cards Grid --}}
-            <div class="menu-grid">
+            <!-- Statistics Grid -->
+            <div class="stats-grid">
+                <!-- Stat 1: Kunjungan Hari Ini -->
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Kunjungan Hari Ini</div>
+                        <div class="stat-value">{{ $kunjunganHariIni }}</div>
+                        <div class="stat-desc">Jumlah kunjungan tamu hari ini</div>
+                    </div>
+                </div>
 
-                <a href="{{ route('admin.users.index') }}" class="menu-card">
-                    <div class="menu-card-icon">
-                        <i class="fa-solid fa-users"></i>
+                <!-- Stat 2: Kunjungan Bulan Ini -->
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-chart-line"></i>
                     </div>
-                    <h3>Kelola Akun Pengguna</h3>
-                    <p>Manajemen akun pegawai, penugasan hak akses role (Petugas Piket, Penerima Bidang, Pimpinan), dan status aktifasi akun.</p>
-                    <div class="menu-card-footer">
-                        <span>Buka Kelola Akun</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <div class="stat-content">
+                        <div class="stat-label">Kunjungan Bulan Ini</div>
+                        <div class="stat-value">{{ $kunjunganBulanIni }}</div>
+                        <div class="stat-desc">
+                            @if ($trendDirection === 'naik')
+                                <span class="trend-indicator trend-up">{{ $trendBulanIni }}% naik</span>
+                            @elseif ($trendDirection === 'turun')
+                                <span class="trend-indicator trend-down">{{ $trendBulanIni }}% turun</span>
+                            @else
+                                <span class="trend-indicator trend-stable">Stabil</span>
+                            @endif
+                        </div>
                     </div>
-                </a>
+                </div>
 
-                <a href="{{ route('admin.bidangs.index') }}" class="menu-card">
-                    <div class="menu-card-icon">
-                        <i class="fa-solid fa-building"></i>
+                <!-- Stat 3: Menunggu Diproses -->
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-hourglass-half"></i>
                     </div>
-                    <h3>Master Bidang BKAD</h3>
-                    <p>Kelola daftar bidang atau unit kerja di lingkungan BKAD Kabupaten Tapin beserta kode dan status keaktifan layanan.</p>
-                    <div class="menu-card-footer">
-                        <span>Buka Master Bidang</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <div class="stat-content">
+                        <div class="stat-label">Menunggu Diproses</div>
+                        <div class="stat-value">{{ $menungguDiproses }}</div>
+                        <div class="stat-desc">Status baru atau diterima</div>
                     </div>
-                </a>
+                </div>
 
-                <a href="{{ route('admin.kunjungan.index') }}" class="menu-card">
-                    <div class="menu-card-icon">
-                        <i class="fa-solid fa-clipboard-list"></i>
+                <!-- Stat 4: Akun Aktif -->
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-user-check"></i>
                     </div>
-                    <h3>Data Kunjungan Tamu</h3>
-                    <p>Monitoring menyeluruh, koreksi data, pencarian multi-parameter, dan audit riwayat seluruh kunjungan tamu dinas.</p>
-                    <div class="menu-card-footer">
-                        <span>Buka Data Kunjungan</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <div class="stat-content">
+                        <div class="stat-label">Akun Aktif</div>
+                        <div class="stat-value">{{ $akunAktif }}</div>
+                        <div class="stat-desc">Pengguna dengan status aktif</div>
                     </div>
-                </a>
+                </div>
+            </div>
 
-                <a href="{{ route('admin.laporan.index') }}" class="menu-card">
-                    <div class="menu-card-icon">
-                        <i class="fa-solid fa-chart-pie"></i>
+            <!-- Tables Row -->
+            <div class="tables-row">
+                <!-- Recent Kunjungan -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Kunjungan Terbaru</h3>
+                        <a href="{{ route('admin.kunjungan.index') }}" class="btn-link">Lihat semua</a>
                     </div>
-                    <h3>Laporan &amp; Rekapitulasi</h3>
-                    <p>Rekapitulasi statistik kunjungan berdasarkan rentang tanggal dan bidang, serta ekspor dokumen format PDF dan CSV.</p>
-                    <div class="menu-card-footer">
-                        <span>Buka Laporan</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <div class="table-responsive">
+                        <table class="table-recent">
+                            <thead>
+                                <tr>
+                                    <th>Nama Tamu</th>
+                                    <th>Bidang</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($kunjunganTerbaru->isEmpty())
+                                    <tr>
+                                        <td colspan="4" class="text-center">Belum ada data kunjungan</td>
+                                    </tr>
+                                @else
+                                    @foreach ($kunjunganTerbaru as $kunjungan)
+                                        <tr>
+                                            <td>
+                                                <div class="user-info">
+                                                    <div class="user-name">{{ $kunjungan->nama_pengunjung }}</div>
+                                                    <div class="text-muted">{{ $kunjungan->nip }}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if ($kunjungan->bidangTujuan)
+                                                    <span class="badge badge-default">{{ $kunjungan->bidangTujuan->nama }}</span>
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @switch($kunjungan->status)
+                                                    @case('baru')
+                                                        <span class="badge badge-warning">Baru</span>
+                                                    @break
+                                                    @case('diterima')
+                                                        <span class="badge badge-info">Diterima</span>
+                                                    @break
+                                                    @case('selesai')
+                                                        <span class="badge badge-success">Selesai</span>
+                                                    @break
+                                                    @default
+                                                        <span class="badge badge-secondary">{{ ucfirst($kunjungan->status) }}</span>
+                                                @endswitch
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.kunjungan.show', $kunjungan) }}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa-solid fa-eye"></i> Detail
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
-                </a>
+                </div>
 
-                <a href="{{ route('admin.activity_logs.index') }}" class="menu-card">
-                    <div class="menu-card-icon">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
+                <!-- Recent Aktivitas -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Aktivitas Terakhir</h3>
+                        <a href="{{ route('admin.activity_logs.index') }}" class="btn-link">Lihat semua</a>
                     </div>
-                    <h3>Log Aktivitas Sistem</h3>
-                    <p>Audit trail dan riwayat aksi pengguna mulai dari pendaftaran kunjungan, penerimaan, penyelesaian, hingga pengalihan.</p>
-                    <div class="menu-card-footer">
-                        <span>Buka Log Aktivitas</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <div class="table-responsive">
+                        <table class="table-recent">
+                            <thead>
+                                <tr>
+                                    <th>Waktu</th>
+                                    <th>Pengguna</th>
+                                    <th>aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($aktivitasTerakhir->isEmpty())
+                                    <tr>
+                                        <td colspan="3" class="text-center">Belum ada aktivitas</td>
+                                    </tr>
+                                @else
+                                    @foreach ($aktivitasTerakhir as $aktivitas)
+                                        <tr>
+                                            <td>
+                                                {{ $aktivitas->created_at->timezone('Asia/Makassar')->format('d/m/Y H:i') }}
+                                            </td>
+                                            <td>
+                                                <div class="user-info">
+                                                    <div class="user-name">{{ $aktivitas->user?->name ?? 'Pengguna dihapus' }}</div>
+                                                    <div class="text-muted">{{ $aktivitas->user?->role ?? '' }}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{ $aktivitas->aktivitas }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
-                </a>
-
+                </div>
             </div>
 
         </main>

@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Bidang;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -14,15 +17,52 @@ class UserController extends Controller
     /**
      * Menampilkan daftar akun.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('bidang')
-            ->orderBy('name')
+        $query = User::with('bidang')
+            ->orderBy('name');
+
+        /*
+         * Pencarian: NIP, Nama, Role
+         */
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nip', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('role', 'like', "%{$search}%");
+            });
+        }
+
+        /*
+         * Filter Role
+         */
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+
+        /*
+         * Filter Bidang
+         */
+        if ($request->filled('bidang_id')) {
+            $query->where('bidang_id', $request->bidang_id);
+        }
+
+        /*
+         * Pagination dengan preserve query string
+         */
+        $users = $query->paginate(15)->onEachSide(1)->withQueryString();
+
+        /*
+         * Bidang untuk dropdown filter
+         */
+        $bidangs = Bidang::where('aktif', true)
+            ->orderBy('nama')
             ->get();
 
         return view(
             'admin.users.index',
-            compact('users')
+            compact('users', 'bidangs')
         );
     }
 
@@ -274,4 +314,81 @@ class UserController extends Controller
                 "Akun {$user->name} berhasil {$status}."
             );
     }
+
+    /**
+     * Menghapus akun secara permanen.
+     */
+    public function destroy(User $user)
+    {
+        /*
+         * Jangan sampai Admin menghapus
+         * akun yang sedang digunakan sendiri.
+         */
+        if ($user->id === auth()->id()) {
+            return redirect()
+                ->route('admin.users.index')
+                ->with(
+                    'error',
+                    'Akun yang sedang digunakan tidak dapat dihapus.'
+                );
+        }
+
+        /*
+         * Cegah penghapusan Admin terakhir yang masih aktif.
+         */
+        if ($user->role === 'admin' && $user->aktif) {
+            $activeAdminCount = User::where('role', 'admin')
+                ->where('aktif', true)
+                ->count();
+
+            if ($activeAdminCount <= 1) {
+                return redirect()
+                    ->route('admin.users.index')
+                    ->with(
+                        'error',
+                        'Tidak dapat menghapus Admin terakhir yang masih aktif. Setidaknya satu Admin aktif harus tersisa.'
+                    );
+            }
+        }
+
+        /*
+         * Simpan identitas untuk log sebelum dihapus.
+         */
+        $deletedUserName = $user->name;
+        $deletedUserNip = $user->nip;
+        $deletedUserRole = $user->role;
+
+        /*
+         * Hapus akun.
+         * Activity logs akan mempertahankan record dengan user_id = NULL
+         * karena foreign key menggunakan nullOnDelete().
+         */
+        $user->delete();
+
+        /*
+         * Catat aktivitas Admin.
+         */
+        ActivityLogger::log(
+            'Hapus Akun',
+            'Admin menghapus akun '.
+            $deletedUserName.
+            ' dengan NIP '.
+            $deletedUserNip.
+            ' dan role '.
+            $deletedUserRole.
+            '.'
+        );
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with(
+                'success',
+                "Akun {$deletedUserName} berhasil dihapus permanen."
+            );
+    }
+
+    /**
+     * Reset password akun oleh Admin.
+     */
+
 }

@@ -452,74 +452,12 @@
         @media (prefers-reduced-motion: reduce) {
             * { transition: none !important; animation: none !important; transform: none !important; }
         }
-    </style>
+</style>
 </head>
 <body>
 
     {{-- SIDEBAR --}}
-    <aside class="sidebar" id="sidebar">
-        <div class="brand-header">
-            <div class="brand-logo">
-                <i class="fa-solid fa-building-columns"></i>
-            </div>
-            <div>
-                <div class="brand-title">SIKUTA</div>
-                <div class="brand-sub">BKAD KABUPATEN TAPIN</div>
-            </div>
-        </div>
-
-        <nav class="menu-list">
-            <a href="{{ route('admin.dashboard') }}" class="menu-link">
-                <i class="fa-solid fa-gauge-high"></i>
-                <span>Dashboard</span>
-            </a>
-
-            <a href="{{ route('admin.users.index') }}" class="menu-link">
-                <i class="fa-solid fa-users"></i>
-                <span>Kelola Akun</span>
-            </a>
-
-            <a href="{{ route('admin.bidangs.index') }}" class="menu-link">
-                <i class="fa-solid fa-building"></i>
-                <span>Master Bidang</span>
-            </a>
-
-            <a href="{{ route('admin.kunjungan.index') }}" class="menu-link active">
-                <i class="fa-solid fa-clipboard-list"></i>
-                <span>Data Kunjungan</span>
-            </a>
-
-            <a href="{{ route('admin.laporan.index') }}" class="menu-link">
-                <i class="fa-solid fa-chart-bar"></i>
-                <span>Laporan &amp; Rekap</span>
-            </a>
-
-            <a href="{{ route('admin.activity_logs.index') }}" class="menu-link">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                <span>Log Aktivitas</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="sidebar-user">
-                <div class="sidebar-user-avatar">
-                    <i class="fa-solid fa-user-shield"></i>
-                </div>
-                <div>
-                    <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
-                    <div class="sidebar-user-role">Administrator</div>
-                </div>
-            </div>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn-sidebar-logout">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    <span>Keluar Sistem</span>
-                </button>
-            </form>
-        </div>
-    </aside>
+    @include('partials.sidebar', ['active' => 'kunjungan'])
 
     {{-- MAIN CONTENT --}}
     <div class="main-wrapper">

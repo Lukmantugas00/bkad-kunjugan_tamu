@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -403,7 +403,9 @@
             margin-top: 4px;
         }
 
-        /* FILTER CARD */
+        /* =====================================================
+           FILTER CARD (gaya sama dengan Filter Log Aktivitas)
+           ===================================================== */
         .card-filter {
             background: var(--color-surface);
             border: 1px solid var(--color-border);
@@ -414,13 +416,13 @@
         }
 
         .filter-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 18px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--color-border);
-        }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+}
 
         .filter-header h3 {
             font-size: 15px;
@@ -431,21 +433,25 @@
             gap: 8px;
         }
 
-        .filter-header span {
+        .filter-header-desc {
             font-size: 12px;
             color: var(--color-text-secondary);
+            text-align: right;
         }
 
+        /* Semua field + tombol dalam satu baris */
         .filter-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
             gap: 14px;
+            align-items: end; /* tombol sejajar bagian bawah input */
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 6px;
+            min-width: 0;
         }
 
         .form-group label {
@@ -473,30 +479,16 @@
             box-shadow: 0 0 0 3px rgba(7, 133, 119, 0.15);
         }
 
-        .filter-actions {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 18px;
-            padding-top: 16px;
-            border-top: 1px solid #edf2f0;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .filter-actions-left {
+        .filter-buttons {
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-wrap: wrap;
         }
 
-        .filter-actions-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .filter-buttons .btn {
+    height: 40px;
+    padding: 0 16px;
+}
 
         /* BUTTONS */
         .btn {
@@ -513,6 +505,7 @@
             transition: all 0.2s ease;
             white-space: nowrap;
             text-decoration: none;
+            font-family: inherit;
         }
 
         .btn-primary {
@@ -576,18 +569,23 @@
             align-items: center;
             justify-content: space-between;
             gap: 16px;
+            flex-wrap: wrap;
         }
 
         .section-header-title {
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .section-header-title h3 {
             font-size: 15px;
             font-weight: 700;
             color: var(--color-primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .section-count-badge {
@@ -597,6 +595,14 @@
             border-radius: 999px;
             font-size: 11px;
             font-weight: 700;
+        }
+
+        /* Tombol ekspor di header kartu rekapitulasi */
+        .export-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .table-responsive {
@@ -706,9 +712,16 @@
             color: var(--color-text-secondary);
         }
 
+        /* RESPONSIVE */
         @media (max-width: 1200px) {
             .filter-grid {
                 grid-template-columns: repeat(3, 1fr);
+            }
+            .filter-grid .form-group:first-child {
+                grid-column: span 3; /* Pencarian full width */
+            }
+            .filter-buttons {
+                grid-column: span 3;
             }
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -725,13 +738,27 @@
             .page-banner { flex-direction: column; align-items: flex-start; }
             .stats-grid { grid-template-columns: 1fr; }
             .filter-grid { grid-template-columns: 1fr; }
-            .filter-actions { flex-direction: column; align-items: stretch; }
-            .filter-actions-left, .filter-actions-right { flex-direction: column; width: 100%; }
-            .filter-actions-left .btn, .filter-actions-right .btn { width: 100%; }
+            .filter-grid .form-group:first-child,
+            .filter-buttons { grid-column: auto; }
+            .filter-buttons .btn {
+    height: 40px;
+    padding: 0 16px;
+}
+            .filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+}
+            .filter-header-desc { text-align: left; }
+            .export-actions { width: 100%; }
+            .export-actions .btn { flex: 1; }
         }
 
         @media print {
-            .sidebar, .topbar, .card-filter, .filter-actions, .pagination-wrapper, .footer {
+            .sidebar, .topbar, .card-filter, .export-actions, .pagination-wrapper, .footer {
                 display: none !important;
             }
             .main-wrapper {
@@ -749,16 +776,27 @@
         @media (prefers-reduced-motion: reduce) {
             * { transition: none !important; animation: none !important; transform: none !important; }
         }
-    </style>
+    /* Override filter button to black */
+.card-filter .btn-primary {
+    background: #000;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.card-filter .btn-primary:hover {
+    background: #000;
+}
+.card-filter .form-control:focus {
+    border-color: #000;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
+}
+</style>
 </head>
 <body>
 
     {{-- SIDEBAR --}}
     <aside class="sidebar" id="sidebar">
         <div class="brand-header">
-            <div class="brand-logo">
-                <i class="fa-solid fa-building-columns"></i>
-            </div>
+            <div class="brand-logo"><img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);"></div>
             <div>
                 <div class="brand-title">SIKUTA</div>
                 <div class="brand-sub">BKAD KABUPATEN TAPIN</div>
@@ -842,54 +880,33 @@
         {{-- CONTENT --}}
         <main class="content">
 
-            {{-- Page Banner --}}
-            <div class="page-banner">
-                <div class="page-banner-info">
-                    <h2>Laporan dan Rekapitulasi</h2>
-                    <p>Analisis tren, rekapitulasi per bidang, serta unduh arsip laporan dalam format cetak PDF atau spreadsheet CSV/Excel.</p>
-                </div>
-                <div class="periode-pill">
-                    <i class="fa-regular fa-calendar-days"></i>
-                    <span>
-                        Periode: <strong>{{ \Carbon\Carbon::parse($filter['tanggal_mulai'])->format('d/m/Y') }}</strong> s.d. <strong>{{ \Carbon\Carbon::parse($filter['tanggal_akhir'])->format('d/m/Y') }}</strong>
-                    </span>
-                </div>
-            </div>
-
-            {{-- Filter Form --}}
+            {{-- ===== Filter Form (disamakan dengan Filter Log Aktivitas) ===== --}}
             <div class="card-filter">
                 <div class="filter-header">
                     <h3>
-                        <i class="fa-solid fa-sliders"></i>
-                        <span>Filter &amp; Parameter Laporan</span>
+                        <i class="fa-solid fa-filter"></i>
+                        <span>Filter Laporan</span>
                     </h3>
-                    <span>Pilih kriteria untuk menyaring rekapitulasi data</span>
+                    <span>Saring rekapitulasi berdasarkan kata kunci, bidang, status, atau rentang tanggal</span>
                 </div>
 
                 <form method="GET" action="{{ route('admin.laporan.index') }}">
                     <div class="filter-grid">
+
+                        {{-- 1. Pencarian (paling lebar) --}}
                         <div class="form-group">
-                            <label for="tanggal_mulai">Tanggal Mulai</label>
+                            <label for="keperluan">Pencarian</label>
                             <input
-                                type="date"
-                                id="tanggal_mulai"
-                                name="tanggal_mulai"
+                                type="text"
+                                id="keperluan"
+                                name="keperluan"
                                 class="form-control"
-                                value="{{ $filter['tanggal_mulai'] ?? request('tanggal_mulai') }}"
+                                value="{{ $filter['keperluan'] ?? request('keperluan') }}"
+                                placeholder="Kata kunci keperluan..."
                             >
                         </div>
 
-                        <div class="form-group">
-                            <label for="tanggal_akhir">Tanggal Akhir</label>
-                            <input
-                                type="date"
-                                id="tanggal_akhir"
-                                name="tanggal_akhir"
-                                class="form-control"
-                                value="{{ $filter['tanggal_akhir'] ?? request('tanggal_akhir') }}"
-                            >
-                        </div>
-
+                        {{-- 2. Bidang Tujuan --}}
                         <div class="form-group">
                             <label for="bidang_id">Bidang Tujuan</label>
                             <select id="bidang_id" name="bidang_id" class="form-control">
@@ -905,6 +922,7 @@
                             </select>
                         </div>
 
+                        {{-- 3. Status Kunjungan --}}
                         <div class="form-group">
                             <label for="status">Status Kunjungan</label>
                             <select id="status" name="status" class="form-control">
@@ -924,48 +942,43 @@
                             </select>
                         </div>
 
+                        {{-- 4. Tanggal Mulai --}}
                         <div class="form-group">
-                            <label for="keperluan">Cari Keperluan</label>
+                            <label for="tanggal_mulai">Tanggal Mulai</label>
                             <input
-                                type="text"
-                                id="keperluan"
-                                name="keperluan"
+                                type="date"
+                                id="tanggal_mulai"
+                                name="tanggal_mulai"
                                 class="form-control"
-                                value="{{ $filter['keperluan'] ?? request('keperluan') }}"
-                                placeholder="Kata kunci keperluan..."
+                                value="{{ $filter['tanggal_mulai'] ?? request('tanggal_mulai') }}"
                             >
                         </div>
-                    </div>
 
-                    <div class="filter-actions">
-                        <div class="filter-actions-left">
+                        {{-- 5. Tanggal Akhir --}}
+                        <div class="form-group">
+                            <label for="tanggal_akhir">Tanggal Akhir</label>
+                            <input
+                                type="date"
+                                id="tanggal_akhir"
+                                name="tanggal_akhir"
+                                class="form-control"
+                                value="{{ $filter['tanggal_akhir'] ?? request('tanggal_akhir') }}"
+                            >
+                        </div>
+
+                        {{-- 6. Tombol Filter + Reset (satu baris dengan field) --}}
+                        <div class="filter-buttons">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                <span>Tampilkan Laporan</span>
+                                <span>Filter</span>
                             </button>
 
                             <a href="{{ route('admin.laporan.index') }}" class="btn btn-secondary">
                                 <i class="fa-solid fa-rotate-left"></i>
-                                <span>Reset Filter</span>
-                            </a>
-
-                            <button type="button" class="btn btn-secondary" onclick="window.print()">
-                                <i class="fa-solid fa-print"></i>
-                                <span>Cetak Tampilan</span>
-                            </button>
-                        </div>
-
-                        <div class="filter-actions-right">
-                            <a href="{{ route('admin.laporan.pdf', request()->query()) }}" class="btn btn-pdf">
-                                <i class="fa-solid fa-file-pdf"></i>
-                                <span>Unduh PDF</span>
-                            </a>
-
-                            <a href="{{ route('admin.laporan.csv', request()->query()) }}" class="btn btn-csv">
-                                <i class="fa-solid fa-file-excel"></i>
-                                <span>Unduh Excel / CSV</span>
+                                <span>Reset</span>
                             </a>
                         </div>
+
                     </div>
                 </form>
             </div>
@@ -1017,7 +1030,7 @@
                 </div>
             </div>
 
-            {{-- Rekap per Bidang --}}
+            {{-- Rekap per Bidang + Tombol Ekspor --}}
             <div class="card-section">
                 <div class="section-header">
                     <div class="section-header-title">
@@ -1026,6 +1039,24 @@
                             <span>Rekapitulasi Kunjungan per Bidang</span>
                         </h3>
                         <span class="section-count-badge">{{ $rekapBidang->count() }} Bidang Terlibat</span>
+                    </div>
+
+                    {{-- Tombol Cetak / PDF / Excel dipindah ke sini --}}
+                    <div class="export-actions">
+                        <button type="button" class="btn btn-secondary" onclick="window.print()">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Cetak Tampilan</span>
+                        </button>
+
+                        <a href="{{ route('admin.laporan.pdf', request()->query()) }}" class="btn btn-pdf">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <span>Unduh PDF</span>
+                        </a>
+
+                        <a href="{{ route('admin.laporan.csv', request()->query()) }}" class="btn btn-csv">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <span>Unduh Excel / CSV</span>
+                        </a>
                     </div>
                 </div>
 
@@ -1222,3 +1253,9 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+

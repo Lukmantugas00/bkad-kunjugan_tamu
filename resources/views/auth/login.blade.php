@@ -139,22 +139,20 @@
             z-index: 1;
         }
 
-        /* Logo badge */
-        .logo-badge {
+        /* Logo */
+        .login-logo {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 52px;
-            height: 52px;
-            margin-bottom: 24px;
-            border-radius: var(--radius-md);
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 76px;
+            height: 76px;
+            margin-bottom: 20px;
         }
 
-        .logo-badge i {
-            font-size: 22px;
-            color: #ffffff;
+        .login-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .brand-name {
@@ -490,13 +488,10 @@
                 padding: 28px 24px;
             }
 
-            .logo-badge {
-                width: 44px;
-                height: 44px;
-            }
-
-            .logo-badge i {
-                font-size: 18px;
+            .login-logo {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 16px;
             }
 
             .brand-name {
@@ -536,8 +531,8 @@
 
         <div class="left-content">
 
-            <div class="logo-badge">
-                <i class="fa-solid fa-building-columns"></i>
+            <div class="login-logo">
+                <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin">
             </div>
 
             <div class="brand-name">SIKUTA</div>

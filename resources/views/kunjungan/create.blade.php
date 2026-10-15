@@ -776,7 +776,7 @@
         <div class="header-inner">
             <div class="brand-link">
                 <div class="brand-logo">
-                    <i class="fa-solid fa-building-columns"></i>
+                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
                 </div>
                 <div>
                     <div class="brand-title">SIKUTA BKAD</div>
@@ -895,7 +895,7 @@
                             </div>
 
                             <div class="form-field">
-                                <label for="nip">NIP (18 Digit) <span class="req-star">*</span></label>
+                                <label for="nip">NIP (18 Digit)</label>
                                 <input
                                     type="text"
                                     id="nip"
@@ -905,7 +905,6 @@
                                     maxlength="18"
                                     inputmode="numeric"
                                     value="{{ old('nip') }}"
-                                    required
                                 >
                                 @error('nip')
                                     <div class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
@@ -913,7 +912,7 @@
                             </div>
 
                             <div class="form-field">
-                                <label for="jabatan">Jabatan <span class="req-star">*</span></label>
+                                <label for="jabatan">Jabatan</label>
                                 <input
                                     type="text"
                                     id="jabatan"
@@ -921,7 +920,6 @@
                                     class="input-text"
                                     placeholder="Contoh: Kepala Sub Bagian Keuangan"
                                     value="{{ old('jabatan') }}"
-                                    required
                                 >
                                 @error('jabatan')
                                     <div class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
@@ -929,16 +927,15 @@
                             </div>
 
                             <div class="form-field">
-                                <label for="instansi">SKPD / Instansi Asal <span class="req-star">*</span></label>
-                                <input
-                                    type="text"
-                                    id="instansi"
-                                    name="instansi"
-                                    class="input-text"
-                                    placeholder="Contoh: Dinas Pendidikan Kabupaten Tapin"
-                                    value="{{ old('instansi') }}"
-                                    required
-                                >
+                                 <label for="instansi">SKPD / Instansi Asal</label>
+                                 <input
+                                     type="text"
+                                     id="instansi"
+                                     name="instansi"
+                                     class="input-text"
+                                     placeholder="Contoh: Dinas Pendidikan Kabupaten Tapin"
+                                     value="{{ old('instansi') }}"
+                                 >
                                 @error('instansi')
                                     <div class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                                 @enderror
