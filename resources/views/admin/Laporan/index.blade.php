@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -520,13 +520,26 @@
 
         .btn-secondary {
             background: #ffffff;
-            color: var(--color-text);
+            color: var(--color-primary-dark);
             border: 1px solid var(--color-border);
         }
 
         .btn-secondary:hover {
-            background: #f1f5f4;
-            border-color: #cbdad7;
+            background: var(--color-primary-light);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn-print {
+            background: #ffffff;
+            color: var(--color-primary);
+            border: 1px solid #a7d9d3;
+        }
+
+        .btn-print:hover {
+            background: var(--color-primary-light);
+            border-color: var(--color-primary);
+            color: var(--color-primary-hover);
         }
 
         .btn-pdf {
@@ -540,13 +553,17 @@
             border-color: var(--color-danger);
         }
 
-        .btn-csv {
+        .btn-csv,
+        .btn-excel,
+        .btn-success {
             background: #ffffff;
             color: var(--color-success);
             border: 1px solid #86efac;
         }
 
-        .btn-csv:hover {
+        .btn-csv:hover,
+        .btn-excel:hover,
+        .btn-success:hover {
             background: var(--color-success-light);
             border-color: var(--color-success);
         }
@@ -776,19 +793,7 @@
         @media (prefers-reduced-motion: reduce) {
             * { transition: none !important; animation: none !important; transform: none !important; }
         }
-    /* Override filter button to black */
-.card-filter .btn-primary {
-    background: #000;
-    color: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.card-filter .btn-primary:hover {
-    background: #000;
-}
-.card-filter .form-control:focus {
-    border-color: #000;
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
-}
+
 </style>
 </head>
 <body>
@@ -1043,7 +1048,7 @@
 
                     {{-- Tombol Cetak / PDF / Excel dipindah ke sini --}}
                     <div class="export-actions">
-                        <button type="button" class="btn btn-secondary" onclick="window.print()">
+                        <button type="button" class="btn btn-print" onclick="window.print()">
                             <i class="fa-solid fa-print"></i>
                             <span>Cetak Tampilan</span>
                         </button>
@@ -1053,9 +1058,9 @@
                             <span>Unduh PDF</span>
                         </a>
 
-                        <a href="{{ route('admin.laporan.csv', request()->query()) }}" class="btn btn-csv">
+                        <a href="{{ route('admin.laporan.excel', request()->query()) }}" class="btn btn-excel">
                             <i class="fa-solid fa-file-excel"></i>
-                            <span>Unduh Excel / CSV</span>
+                            <span>Unduh Excel</span>
                         </a>
                     </div>
                 </div>

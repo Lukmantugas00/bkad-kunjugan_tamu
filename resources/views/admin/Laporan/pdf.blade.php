@@ -98,7 +98,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Kunjungan - SIKUTA</title>
+    <title>Laporan Kunjungan</title>
 
     <style>
         @page {
@@ -433,7 +433,7 @@
 
             <td>
                 <div class="instansi">BKAD KABUPATEN TAPIN</div>
-                <div class="sistem">SIKUTA &ndash; Sistem Kunjungan Tamu</div>
+                <div class="sistem">Sistem Informasi Kunjungan Tamu</div>
                 <div class="alamat">
                     Badan Keuangan dan Aset Daerah Kabupaten Tapin
                 </div>
@@ -605,7 +605,7 @@
             <td class="box">
                 Tapin, {{ now($tz)->translatedFormat('d F Y') }}
                 <br>
-                Administrator SIKUTA
+                Administrator
 
                 <div class="space"></div>
 

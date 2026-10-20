@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\BidangController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -183,8 +184,6 @@ Route::middleware([
         [UserController::class, 'destroy']
     )->name('admin.users.destroy');
 
-
-
     // =========================
     // DATA KUNJUNGAN ADMIN
     // =========================
@@ -227,6 +226,9 @@ Route::middleware([
         '/admin/laporan/csv',
         [LaporanController::class, 'csv']
     )->name('admin.laporan.csv');
+    Route::get('/laporan/excel', [
+        LaporanController::class, 'excel', ]
+    )->name('admin.laporan.excel');
 
     // =========================
     // LOG AKTIVITAS
@@ -306,6 +308,9 @@ Route::middleware([
         '/pimpinan/laporan/csv',
         [PimpinanController::class, 'csv']
     )->name('pimpinan.laporan.csv');
+    Route::get(
+         '/laporan/excel',
+        [\App\Http\Controllers\PimpinanController::class, 'excel']
+    )->name('pimpinan.laporan.excel');
 
 });
-

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Pimpinan - SIKUTA BKAD Kabupaten Tapin</title>
+    <title>Laporan Kepala Badan - SIKUTA BKAD Kabupaten Tapin</title>
 
     {{-- Fonts & Icons --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -507,13 +507,17 @@
             border-color: var(--color-danger);
         }
 
-        .btn-csv {
+        .btn-csv,
+        .btn-excel,
+        .btn-success {
             background: #ffffff;
             color: var(--color-success);
             border: 1px solid #86efac;
         }
 
-        .btn-csv:hover {
+        .btn-csv:hover,
+        .btn-excel:hover,
+        .btn-success:hover {
             background: var(--color-success-light);
             border-color: var(--color-success);
         }
@@ -713,12 +717,12 @@
         <nav class="menu-list">
             <a href="{{ route('pimpinan.dashboard') }}" class="menu-link">
                 <i class="fa-solid fa-gauge-high"></i>
-                <span>Dasbor Pimpinan</span>
+                <span>Dashboard Kepala Badan</span>
             </a>
 
             <a href="{{ route('pimpinan.laporan') }}" class="menu-link active">
                 <i class="fa-solid fa-chart-pie"></i>
-                <span>Laporan Eksekutif</span>
+                <span>Laporan Kunjungan Tamu</span>
             </a>
         </nav>
 
@@ -729,7 +733,7 @@
                 </div>
                 <div>
                     <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
-                    <div class="sidebar-user-role">Pimpinan / Kepala Badan</div>
+                    <div class="sidebar-user-role">Kepala Badan</div>
                 </div>
             </div>
 
@@ -753,14 +757,14 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="topbar-title">
-                    <h1>Laporan Eksekutif</h1>
+                    <h1>Laporan Kunjungan Tamu</h1>
                     <p>Rekapitulasi berkas kunjungan tamu dan ekspor dokumen dinas pimpinan</p>
                 </div>
             </div>
 
             <div class="topbar-badge">
                 <i class="fa-solid fa-file-shield"></i>
-                <span>Laporan Pimpinan</span>
+                <span>Laporan Kepala Badan</span>
             </div>
         </header>
 
@@ -911,9 +915,9 @@
                             <span>Unduh PDF</span>
                         </a>
 
-                        <a href="{{ route('pimpinan.laporan.csv', request()->query()) }}" class="btn btn-csv">
+                        <a href="{{ route('pimpinan.laporan.excel', request()->query()) }}" class="btn btn-success">
                             <i class="fa-solid fa-file-excel"></i>
-                            <span>Unduh CSV</span>
+                            <span>Unduh Excel</span>
                         </a>
                     </div>
                 </div>
