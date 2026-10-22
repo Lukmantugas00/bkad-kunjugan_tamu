@@ -88,8 +88,8 @@
         }
 
         .brand-logo {
-            width: 44px;
-            height: 44px;
+            width: 76px;
+            height: 76px;
             background: #ffffff;
             color: var(--color-primary-dark);
             border-radius: var(--radius-md);
@@ -696,7 +696,7 @@
     {{-- SIDEBAR --}}
     <aside class="sidebar" id="sidebar">
         <div class="brand-header">
-            <div class="brand-logo"><img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);"></div>
+            <div class="brand-logo"><img src="{{ asset('images/logo.png') }}" alt="Logo BKAD Kabupaten Tapin" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);"></div>
             <div>
                 <div class="brand-title">SIKUTA</div>
                 <div class="brand-sub">BKAD KABUPATEN TAPIN</div>
@@ -785,7 +785,7 @@
             <div class="card-filter">
                 <div class="filter-header">
                     <h3>
-                        <i class="fa-solid fa-filter"></i>
+                        <i class="fa-solid fa-filter" style="color: var(--color-primary);"></i>
                         <span>Filter Log Aktivitas</span>
                     </h3>
                     <span>Saring riwayat berdasarkan pengguna, aktivitas, atau rentang tanggal</span>
@@ -871,7 +871,7 @@
                 <div class="table-header">
                     <div class="table-header-title">
                         <h3>
-                            <i class="fa-solid fa-list-check"></i>
+                            <i class="fa-solid fa-list-check" style="color: var(--color-primary);"></i>
                             <span>Daftar Riwayat Aktivitas</span>
                         </h3>
                         <span class="badge-count">{{ number_format($logs->total()) }} Log Terdata</span>
@@ -1159,4 +1159,6 @@
     </script>
 </body>
 </html>
+
+
 

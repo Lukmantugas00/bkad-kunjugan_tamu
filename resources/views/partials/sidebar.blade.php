@@ -1,7 +1,7 @@
 <aside class="sidebar" id="sidebar">
     <div class="brand-header">
-        <div class="brand-logo" style="width: 44px; height: 44px;">
-            <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
+        <div class="brand-logo" style="width: 76px; height: 76px;">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
         </div>
         <div>
             <div class="brand-title">SIKUTA</div>
@@ -61,3 +61,5 @@
         </form>
     </div>
 </aside>
+
+

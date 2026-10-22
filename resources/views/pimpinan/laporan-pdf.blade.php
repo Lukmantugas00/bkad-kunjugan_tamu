@@ -1,8 +1,8 @@
-﻿
+
 {{--
     Template PDF Laporan Kunjungan SIKUTA
     Kompatibel dengan DomPDF.
-    Logo utama: public/images/logo.jpg
+    Logo utama: public/images/logo.png
 --}}
 @php
     $tz = 'Asia/Makassar';
@@ -53,14 +53,14 @@
     |--------------------------------------------------------------------------
     | LOGO BKAD
     |--------------------------------------------------------------------------
-    | Prioritas utama mengikuti logo aplikasi: public/images/logo.jpg
+    | Prioritas utama mengikuti logo aplikasi: public/images/logo.png
     | Format PNG dan JPEG lainnya digunakan sebagai cadangan.
     */
     $daftarLogo = [
-        public_path('images/logo.jpg'),
+        public_path('images/logo.png'),
         public_path('images/logo.png'),
         public_path('images/logo.jpeg'),
-        public_path('images/Logo.jpg'),
+        public_path('images/logo.png'),
         public_path('images/Logo.png'),
     ];
 
@@ -618,3 +618,4 @@
 
 </body>
 </html>
+

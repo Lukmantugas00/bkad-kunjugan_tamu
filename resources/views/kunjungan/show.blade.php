@@ -120,8 +120,8 @@
         }
 
         .brand-logo {
-            width: 44px;
-            height: 44px;
+            width: 76px;
+            height: 76px;
             background: #ffffff;
             color: var(--color-primary-dark);
             border-radius: var(--radius-md);
@@ -679,7 +679,7 @@
     <aside class="sidebar" id="sidebar">
         <div class="brand-header">
             <div class="brand-logo">
-                <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo BKAD Kabupaten Tapin" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
             </div>
             <div>
                 <div class="brand-title">SIKUTA</div>
@@ -1190,3 +1190,5 @@
     </script>
 </body>
 </html>
+
+

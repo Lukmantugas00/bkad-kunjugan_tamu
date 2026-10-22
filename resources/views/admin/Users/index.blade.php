@@ -85,8 +85,8 @@
         }
 
         .brand-logo {
-            width: 44px;
-            height: 44px;
+            width: 76px;
+            height: 76px;
             background: #ffffff;
             color: var(--color-primary-dark);
             border-radius: var(--radius-md);
@@ -905,7 +905,7 @@
                 <div class="card-filter">
                     <div class="filter-header">
                         <h3>
-                            <i class="fa-solid fa-sliders"></i>
+                            <i class="fa-solid fa-sliders" style="color: var(--color-primary);"></i>
                             <span>Filter Pengguna</span>
                         </h3>
                         <span>Cari dan saring daftar pengguna</span>
@@ -1444,3 +1444,4 @@
       </script>
   </body>
 </html>
+

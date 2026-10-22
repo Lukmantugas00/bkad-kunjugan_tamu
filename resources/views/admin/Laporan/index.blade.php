@@ -86,8 +86,8 @@
         }
 
         .brand-logo {
-            width: 44px;
-            height: 44px;
+            width: 76px;
+            height: 76px;
             background: #ffffff;
             color: var(--color-primary-dark);
             border-radius: var(--radius-md);
@@ -801,7 +801,7 @@
     {{-- SIDEBAR --}}
     <aside class="sidebar" id="sidebar">
         <div class="brand-header">
-            <div class="brand-logo"><img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);"></div>
+            <div class="brand-logo"><img src="{{ asset('images/logo.png') }}" alt="Logo BKAD Kabupaten Tapin" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-md);"></div>
             <div>
                 <div class="brand-title">SIKUTA</div>
                 <div class="brand-sub">BKAD KABUPATEN TAPIN</div>
@@ -889,7 +889,7 @@
             <div class="card-filter">
                 <div class="filter-header">
                     <h3>
-                        <i class="fa-solid fa-filter"></i>
+                        <i class="fa-solid fa-filter" style="color: var(--color-primary);"></i>
                         <span>Filter Laporan</span>
                     </h3>
                     <span>Saring rekapitulasi berdasarkan kata kunci, bidang, status, atau rentang tanggal</span>
@@ -1040,7 +1040,7 @@
                 <div class="section-header">
                     <div class="section-header-title">
                         <h3>
-                            <i class="fa-solid fa-building-user"></i>
+                            <i class="fa-solid fa-building-user" style="color: var(--color-primary);"></i>
                             <span>Rekapitulasi Kunjungan per Bidang</span>
                         </h3>
                         <span class="section-count-badge">{{ $rekapBidang->count() }} Bidang Terlibat</span>
@@ -1115,7 +1115,7 @@
                 <div class="section-header">
                     <div class="section-header-title">
                         <h3>
-                            <i class="fa-solid fa-table-list"></i>
+                            <i class="fa-solid fa-table-list" style="color: var(--color-primary);"></i>
                             <span>Rincian Data Kunjungan</span>
                         </h3>
                         <span class="section-count-badge">{{ number_format($kunjungans->total()) }} Total Data</span>
@@ -1258,6 +1258,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

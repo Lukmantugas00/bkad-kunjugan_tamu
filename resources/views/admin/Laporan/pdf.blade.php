@@ -1,4 +1,4 @@
-﻿
+
 {{--
     Template PDF Laporan Kunjungan SIKUTA
     Kompatibel dengan DomPDF.
@@ -494,7 +494,8 @@
             </td>
 
             <td>
-                <div class="lbl">Baru</div>
+                <div class="l
+                bl">Baru</div>
                 <div class="val">{{ number_format($totalBaru) }}</div>
             </td>
 

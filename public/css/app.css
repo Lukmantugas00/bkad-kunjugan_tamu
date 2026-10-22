@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    SIKUTA - BKAD Kabupaten Tapin
    Shared stylesheet for every authenticated layout
    ---------------------------------------------------------------------
@@ -132,8 +132,8 @@ img {
 }
 
 .brand-logo {
-    width: 44px;
-    height: 44px;
+    width: 76px;
+            height: 76px;
     background: #ffffff;
     color: var(--color-primary-dark);
     border-radius: var(--radius-md);
@@ -621,3 +621,4 @@ img {
     color: var(--color-warning);
     margin-top: 2px;
 }
+

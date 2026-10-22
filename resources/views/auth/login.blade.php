@@ -97,7 +97,7 @@
 
 
         /* =============================================================
-           LEFT PANEL — Branding
+           LEFT PANEL â€” Branding
         ============================================================= */
 
         .login-left {
@@ -219,7 +219,7 @@
 
 
         /* =============================================================
-           RIGHT PANEL — Login Form
+           RIGHT PANEL â€” Login Form
         ============================================================= */
 
         .login-right {
@@ -428,7 +428,7 @@
 
 
         /* =============================================================
-           RESPONSIVE — Tablet
+           RESPONSIVE â€” Tablet
         ============================================================= */
 
         @media (max-width: 768px) {
@@ -471,7 +471,7 @@
 
 
         /* =============================================================
-           RESPONSIVE — Small Mobile
+           RESPONSIVE â€” Small Mobile
         ============================================================= */
 
         @media (max-width: 420px) {
@@ -524,7 +524,7 @@
 
 
     <!-- =====================================================
-         LEFT PANEL — Branding
+         LEFT PANEL â€” Branding
     ====================================================== -->
 
     <section class="login-left">
@@ -532,10 +532,10 @@
         <div class="left-content">
 
             <div class="login-logo">
-                <img src="{{ asset('images/logo.jpg') }}" alt="Logo BKAD Kabupaten Tapin">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo BKAD Kabupaten Tapin">
             </div>
 
-            <div class="brand-name">SIKUTA</div>
+
 
             <div class="brand-subtitle">
                 Sistem Informasi Kunjungan Tamu
@@ -568,7 +568,7 @@
 
 
     <!-- =====================================================
-         RIGHT PANEL — Login Form
+         RIGHT PANEL â€” Login Form
     ====================================================== -->
 
     <section class="login-right">
@@ -751,3 +751,4 @@
 </body>
 
 </html>
+

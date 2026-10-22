@@ -75,8 +75,8 @@
         }
 
         .brand-logo {
-            width: 44px;
-            height: 44px;
+            width: 76px;
+            height: 76px;
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: var(--radius-md);
@@ -620,3 +620,4 @@
     </script>
 </body>
 </html>
+

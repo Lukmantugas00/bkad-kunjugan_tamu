@@ -311,7 +311,7 @@ class LaporanController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $logoPath = public_path('images/logo.jpg');
+        $logoPath = public_path('images/logo.png');
 
         if (file_exists($logoPath)) {
             $drawing = new Drawing;
@@ -680,3 +680,4 @@ class LaporanController extends Controller
         );
     }
 }
+

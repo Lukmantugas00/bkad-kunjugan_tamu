@@ -226,8 +226,9 @@ Route::middleware([
         '/admin/laporan/csv',
         [LaporanController::class, 'csv']
     )->name('admin.laporan.csv');
-    Route::get('/laporan/excel', [
-        LaporanController::class, 'excel', ]
+    Route::get(
+        '/admin/laporan/excel',
+        [LaporanController::class, 'excel']
     )->name('admin.laporan.excel');
 
     // =========================
@@ -309,8 +310,8 @@ Route::middleware([
         [PimpinanController::class, 'csv']
     )->name('pimpinan.laporan.csv');
     Route::get(
-         '/laporan/excel',
-        [\App\Http\Controllers\PimpinanController::class, 'excel']
+        '/pimpinan/laporan/excel',
+        [PimpinanController::class, 'excel']
     )->name('pimpinan.laporan.excel');
 
 });

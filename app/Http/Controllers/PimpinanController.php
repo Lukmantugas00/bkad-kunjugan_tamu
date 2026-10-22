@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Bidang;
 use App\Models\Kunjungan;
 use Carbon\Carbon;
@@ -527,7 +528,7 @@ class PimpinanController extends Controller
         $sheet->setCellValue('A4', 'LAPORAN KUNJUNGAN TAMU');
 
         // Logo BKAD.
-        $logoPath = public_path('images/logo.jpg');
+        $logoPath = public_path('images/logo.png');
 
         if (file_exists($logoPath)) {
             $drawing = new Drawing();
@@ -863,3 +864,4 @@ class PimpinanController extends Controller
         );
     }
 }
+
